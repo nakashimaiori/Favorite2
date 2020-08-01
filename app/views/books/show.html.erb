@@ -58,6 +58,13 @@
 
 			<td><%= link_to @book.title %></td>
 			<td><%= @book.body %></td>
+<!-- ここから -->
+			
+            <td>
+              コメント数：<%= @book.post_comments.count %>
+            </td>
+
+
 			<% if @book.user_id == current_user.id %>
 			<td><%= link_to "Edit",edit_book_path(@book.id),class:"btn-sm btn-success" %></td>
 			<!-- destroy反応した -->
@@ -65,6 +72,36 @@
 			<% end %>
 			</tr>
 			</table>
+<!--  -->
+			<p class="mt-5">コメント一覧</p>
+            <% @book.post_comments.each do |post_comment| %>
+              <div>
+                  <a href="#" class="link-author"><%= post_comment.user.name %></a>
+              </div>
+              <div class="avatar">
+                  <%= attachment_image_tag post_comment.user, :profile_image, :fill, 20, 20, format: 'jpeg', fallback: "no_image.jpg",size:'60x60' %>
+              </div>
+              <span class="comment-meta">
+                <span class="comment-date"><%= post_comment.created_at.strftime('%Y/%m/%d') %></span>
+              </span>
+              <div class="comment-entry"><%= post_comment.comment %></div>
+              <br />
+              <% if post_comment.user == current_user %>
+            <div>
+              <%= link_to "削除", book_post_comment_path(post_comment.book, post_comment), method: :delete, class: "btn btn-danger pull-right" %>
+            </div>
+          <% end %>
+            <% end %>
+
+
+            <%= form_for [@book, @post_comment] do |f| %>
+              <div class="row">
+              <div class="col-sm-12">
+                <%= f.text_area :comment, rows:'5', class: "form-control",placeholder: "コメントをここに" %>
+              </div>
+              </div>
+              <%= f.submit "送信する", class: "btn btn-lg btn-base-1 mt-20 pull-right" %>
+            <% end %>
 
 	</div>
 </div>
