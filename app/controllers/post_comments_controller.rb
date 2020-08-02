@@ -5,6 +5,7 @@ class PostCommentsController < ApplicationController
     comment.book_id = book.id
     comment.save
     redirect_to book_path(book)
+
   end
 
   def destroy
@@ -17,3 +18,4 @@ class PostCommentsController < ApplicationController
   	params.require(:post_comment).permit(:comment)
   end
 end
+
