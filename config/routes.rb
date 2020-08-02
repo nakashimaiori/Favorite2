@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   root 'homes#top'
   get 'home/about' => 'homes#about'
   resources :books, only: [:create, :index, :show, :edit, :destroy] do
+    resource :favorites, only: [:create, :destroy]
   	resources :post_comments, only: [:create, :destroy]
   end
   patch 'books/:id' => 'books#update', as: 'update_book'
