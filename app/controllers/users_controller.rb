@@ -33,7 +33,6 @@ class UsersController < ApplicationController
     @book = Book.new
   end
 
-
   private
 
   def user_params
