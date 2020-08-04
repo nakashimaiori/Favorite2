@@ -1,0 +1,22 @@
+<% book.post_comments.each do |post_comment| %>
+                  <table class="table table-striped">
+                    <tr>
+                      <td class="col-xs-2">
+                    <%= attachment_image_tag post_comment.user, :profile_image, :fill, 20, 20, format: 'jpeg', fallback: "no_image.jpg",size:'60x60' %>
+
+                  <div><a href="#" class="link-author"><%= post_comment.user.name %></a></div>
+                </td>
+                <td class="col-xs-4">
+                  <%= post_comment.comment %>
+                </td>
+                <td class="col-xs-4">
+                  <span class="comment-date"><%= post_comment.created_at.strftime('%Y/%m/%d %H:%M:%S') %></span>
+                </td>
+                <td class="col-xs-2">
+                  <% if post_comment.user == current_user %>
+                    <%= link_to "Destroy", book_post_comment_path(post_comment.book, post_comment), method: :delete, remote: true, class: "btn-sm btn-danger" %>
+                  <% end %>
+                  </td>
+                  </tr>
+                  <% end %>
+              </table>

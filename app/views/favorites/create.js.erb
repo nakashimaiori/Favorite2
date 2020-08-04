@@ -1,0 +1,2 @@
+//投稿一覧いいね差し替え
+$("#favorite_heart_<%= @book.id %>").html("<%= escape_javascript(render 'favorites/like', { book: @book}) %>");

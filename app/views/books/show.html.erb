@@ -45,73 +45,26 @@
 
 	<div class="col-xs-9">
 		<h2>Book detail</h2>
-		<table class='table'>
-			<tr>
-			<td>
-				<%= link_to user_path(@book.user_id) do %>
-				<%= attachment_image_tag @book.user, :profile_image, :fill, 50, 50, fallback: "no_image.jpg",size:'50x50',format: 'no_image.jpg' %>
-					<div>
-						<%= @book.user.name %>
-					</div>
-				<% end %>
-			</td>
+		  <%= render 'detail', book: @book %>
 
-			<td><%= link_to @book.title %></td>
-			<td><%= @book.body %></td>
-<!-- ここから -->
-            <td>
-              <!-- いいね -->
-              <%= render 'favorites/like', book: @book %>
-              <!-- いいね -->
-            </td>
-            <td>
-              コメント数：<%= @book.post_comments.count %>
-            </td>
-
-
-			<% if @book.user_id == current_user.id %>
-			<td><%= link_to "Edit",edit_book_path(@book.id),class:"btn-sm btn-success" %></td>
-			<td><%= link_to "Destroy",book_path(@book.id),class:"btn-sm btn-danger", method: :delete,data: {confirm: "削除しますか？"} %></td>
-			<% end %>
-			</tr>
-			</table>
-<!--  -->
 			<p class="mt-5"><strong>Comment</strong></p>
-                  <% @book.post_comments.each do |post_comment| %>
-                  <table class="table table-striped">
-                    <tr>
-                      <td class="col-xs-2">
-                    <%= attachment_image_tag post_comment.user, :profile_image, :fill, 20, 20, format: 'jpeg', fallback: "no_image.jpg",size:'60x60' %>
-
-                  <div><a href="#" class="link-author"><%= post_comment.user.name %></a></div>
-                </td>
-                <td class="col-xs-4">
-                  <%= post_comment.comment %>
-                </td>
-                <td class="col-xs-4">
-                  <span class="comment-date"><%= post_comment.created_at.strftime('%Y/%m/%d %H:%M:%S') %></span>
-                </td>
-                <td class="col-xs-2">
-                  <% if post_comment.user == current_user %>
-                    <%= link_to "Destroy", book_post_comment_path(post_comment.book, post_comment), method: :delete, class: "btn-sm btn-danger" %>
-                  <% end %>
-                  </td>
-                  </tr>
-                  <% end %>
-              </table>
+        <div id="comments_area">
+          <%= render 'post_comments/comment', book: @book %>
+        </div>
 
 
-            <%= form_for [@book, @post_comment] do |f| %>
-
+            <%= form_with model: [@book, @post_comment] do |f| %>
               <div class="row">
               <div class="col-sm-12">
-                <%= f.text_area :comment, rows:'5', class: "form-control",placeholder: "コメントをここに" %>
+            <%= f.text_area :comment, rows:'5', class: "form-control",placeholder: "コメントをここに" %>
+            <%= f.submit "送信", class: "btn btn-lg btn-base-1 mt-20 pull-right" %>
               </div>
               </div>
-              <%= f.submit "送信", class: "btn btn-lg btn-base-1 mt-20 pull-right" %>
             <% end %>
 
 	</div>
 </div>
 </div>
 </div>
+
+

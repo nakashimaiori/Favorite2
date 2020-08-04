@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   get 'home/about' => 'homes#about'
   resources :books, only: [:create, :index, :show, :edit, :destroy] do
     resource :favorites, only: [:create, :destroy]
-  	resources :post_comments, only: [:create, :destroy]
+    resources :post_comments, only: [:create, :destroy]
   end
   patch 'books/:id' => 'books#update', as: 'update_book'
   delete 'books/:id' => 'books#destroy', as: 'destroy_book'
